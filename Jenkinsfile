@@ -11,11 +11,6 @@ pipeline {
                 sh 'mvn -B -DskipTests clean package'
             }
         }
-        stage('Build Docker image') {
-            steps {
-                sh 'docker build -t my-app:1.0-SNAPSHOT .'
-            }
-        }
         stage('Test') {
             steps {
                 sh 'mvn test'
@@ -23,6 +18,17 @@ pipeline {
             post {
                 always {
                     junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+
+        stage('Integration Tests') {
+            steps {
+                sh 'mvn -DskipTests verify'
+            }
+            post {
+                always {
+                    junit 'target/failsafe-reports/*.xml'
                 }
             }
         }
