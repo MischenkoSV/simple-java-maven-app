@@ -1,7 +1,8 @@
 pipeline {
     agent {
         docker {
-            image '192.168.108.17:5000/maven-docker-cli:3.6.1-jdk-8'
+            image 'maven-docker-cli:3.6.1-jdk-8'
+            registryUrl '192.168.108.17:5000'
             args '-u 0:0 -v $HOME/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
