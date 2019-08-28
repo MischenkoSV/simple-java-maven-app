@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'maven:3-alpine'
-            args '-u 0:0 -v $HOME/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock'
+            args '-u 0:0 -v $HOME/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock -e HTTPS_PROXY=http://proxy-dev.aws.wiley.com:8080 -e HTTP_PROXY=http://proxy-dev.aws.wiley.com:8080 -e NO_PROXY=169.254.169.254,.wiley.com,localhost'
         }
     }
     stages {
