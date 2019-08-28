@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'maven:3-alpine'
-            args '-u=1000:1000 -v $HOME/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock'
+            args '-u 1000:1000 -v $HOME/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     stages {
