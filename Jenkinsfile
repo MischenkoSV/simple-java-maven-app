@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'maven:3-alpine'
-            args '--user=root -v $HOME/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock'
+            args '-u=1000:1000 -v $HOME/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     stages {
@@ -38,7 +38,10 @@ pipeline {
 
         stage('Build Docker image') {
             steps {
-                sh 'apk add docker-cli'
+                sh 'mkdir -p /tmp/download \
+                    && curl -L https://download.docker.com/linux/static/stable/x86_64/docker-17.06.2-ce.tgz | tar -xz -C /tmp/download \
+                    && mv /tmp/download/docker/docker /usr/local/bin/ \
+                    && rm -rf /tmp/download'
                 sh 'docker build -t my-app:1.0-SNAPSHOT .;'
             }
         }
