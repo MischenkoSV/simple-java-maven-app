@@ -24,7 +24,7 @@ pipeline {
 
         stage('Build Docker image') {
             steps {
-                sh 'apk update; apk add docker-cli; docker build -t my-app:1.0-SNAPSHOT .;'
+                sh 'apk add docker-cli; docker build -t my-app:1.0-SNAPSHOT .;'
             }
         }
 
