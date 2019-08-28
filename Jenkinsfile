@@ -1,16 +1,13 @@
 pipeline {
     agent {
         docker {
-            image 'maven:3-alpine'
+            image '192.168.108.17:5000/maven-docker-cli:3.6.1-jdk-8'
             args '-u 0:0 -v $HOME/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock'
         }
     }
     stages {
         stage('Build') {
             steps {
-                sh 'env'
-                sh 'whoami'
-                sh 'ping -c 3 192.168.108.17'
                 sh 'mvn -B -DskipTests clean package'
             }
         }
@@ -37,14 +34,7 @@ pipeline {
         }
 
         stage('Build Docker image') {
-            agent {
-                docker {
-                    image 'alpine'
-                    args '-u 0:0 -v /var/run/docker.sock:/var/run/docker.sock'
-                }
-            }
             steps {
-                sh 'apk add docker-cli'
                 sh 'docker build -t my-app:1.0-SNAPSHOT .;'
             }
         }
