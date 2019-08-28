@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'maven:3-alpine'
-            args '-v $HOME/.m2:/root/.m2 -v /var/run/docker.sock:/var/run/docker.sock'
+            args '-v $HOME/.m2:/root/.m2 -v DOCKER_HOST=tcp://192.168.108.17:2376'
         }
     }
     stages {
@@ -22,12 +22,6 @@ pipeline {
             }
         }
 
-        stage('Build Docker image') {
-            steps {
-                sh 'apk add docker-cli; docker build -t my-app:1.0-SNAPSHOT .;'
-            }
-        }
-
         stage('Integration Tests') {
             steps {
                 sh 'mvn -DskipTests verify'
@@ -36,6 +30,12 @@ pipeline {
                 always {
                     junit 'target/failsafe-reports/*.xml'
                 }
+            }
+        }
+
+        stage('Build Docker image') {
+            steps {
+                sh 'apk add docker-cli; docker build -t my-app:1.0-SNAPSHOT .;'
             }
         }
     }
