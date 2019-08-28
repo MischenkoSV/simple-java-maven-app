@@ -108,12 +108,9 @@
 
     <pluginRepositories>
         <pluginRepository>
-            <id>wiley-releases</id>
+            <id>wiley-public</id>
             <name>Wiley Releases</name>
-            <url>http://nexus.aws.wiley.com:8081/nexus/content/repositories/releases/</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
+            <url>http://nexus.aws.wiley.com:8081/nexus/content/groups/public</url>
         </pluginRepository>
     </pluginRepositories>
 </project>
