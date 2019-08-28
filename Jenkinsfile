@@ -22,6 +22,12 @@ pipeline {
             }
         }
 
+        stage('Build Docker image') {
+            steps {
+                sh 'docker build -t my-app:1.0-SNAPSHOT .'
+            }
+        }
+
         stage('Integration Tests') {
             steps {
                 sh 'mvn -DskipTests verify'
