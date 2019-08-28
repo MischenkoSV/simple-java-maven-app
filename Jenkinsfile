@@ -9,6 +9,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'env'
+                sh 'whoami'
                 sh 'ping -c 3 192.168.108.17'
                 sh 'mvn -B -DskipTests clean package'
             }
